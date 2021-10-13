@@ -111,8 +111,6 @@ void proximaGeracao(Mundo *mundo){
         }
     }
 
-    printf("\n\nCHEGOU AQUI\n\n");
-    
     //Repovoando o mundo com a nova geracao
     for(i = 0; i < 10; i++){
         for(j = 0; j < 10; j++){
@@ -224,7 +222,7 @@ int vivo_ou_morto(int tipo_de_posicao, int i, int j, int posicoes[10][10]){
 
 int verifica_tipo_de_posicao(int i, int j){
 
-    if(i != 0 && j != 0){
+    if(i != 0 == j != 0){
 
         if(i == 0 && j == 9){
             return 2;
@@ -250,8 +248,9 @@ int verifica_tipo_de_posicao(int i, int j){
             return 7;
         }
 
-        if(j == 9 && (i != 0 && i != 9)){}
+        if(j == 9 && (i != 0 && i != 9)){
             return 8;
+        }
 
         if(i != 9 && j!= 9){
             return 9;

@@ -15,9 +15,9 @@ void mostraMundo(int posicoes[10][10]){
             printf("%d ", (i-1));
             for (j = 0; j < 10; j++){
                 if(j != 9){
-                    (posicoes[i-1][j] == 0 ? printf("- ") : printf("* ")); 
+                    (posicoes[i-1][j] == 0 ? printf("  ") : printf("* ")); 
                 } else{
-                    (posicoes[i-1][j] == 0 ? printf("-") : printf("*")); 
+                    (posicoes[i-1][j] == 0 ? printf(" ") : printf("*")); 
                     printf("\n");
                 }
             }
