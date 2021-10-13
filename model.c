@@ -10,7 +10,6 @@ type struct{
     Posicao vizinhos_mortos_pecas_vivas[100];
     Posicao pecas_vivas_proxima_geracao[100];
     Posicao vizinhos_mortos_proxima_geracao[100];
-
 } Mundo;              
 
 
