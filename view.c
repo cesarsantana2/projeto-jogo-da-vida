@@ -1,26 +1,18 @@
-void mostraMundo(int posicoes[10][10]){
- int i, j;
- 
-    for(i = 0; i < 11; i++){
-        if (i == 0){
-            printf("  ");
-            for (j = 0; j < 10; j++){
-                if(j != 9){
-                    printf("%d ", j);
-                } else{
-                    printf("%d\n", j);
-                }
-            }
-        }else{
-            printf("%d ", (i-1));
-            for (j = 0; j < 10; j++){
-                if(j != 9){
-                    (posicoes[i-1][j] == 0 ? printf("  ") : printf("* ")); 
-                } else{
-                    (posicoes[i-1][j] == 0 ? printf(" ") : printf("*")); 
-                    printf("\n");
-                }
-            }
-        }
-    }
+int menu_principal(){
+
+    printf("\n\nProjeto JOGO  DA  VIDA\n");
+    printf("Grupo CCAJ\n");
+    printf("=========================\n");
+    printf("1 - Inicializar a Matriz\n");
+    printf("2 - Recuperar e salvar uma geracao inicial\n");
+    printf("3 - Recuperar uma geracao inicial cadastrada\n");
+    printf("4 - INICIAR O PROCESSO\n");
+    printf("5 - Mostra a Matriz final apos o processo\n");
+    printf("6 - Limpar o cadastro de 7 geracoes iniciais\n");
+    printf("0 - Sair\n");
+
+    return 0;
+
+
+
 }
