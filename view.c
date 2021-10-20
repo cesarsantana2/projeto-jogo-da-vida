@@ -1,5 +1,7 @@
 int menu_principal(){
 
+    int opcao;
+
     printf("\n\nProjeto JOGO  DA  VIDA\n");
     printf("Grupo CCAJ\n");
     printf("=========================\n");
@@ -11,8 +13,12 @@ int menu_principal(){
     printf("6 - Limpar o cadastro de 7 geracoes iniciais\n");
     printf("0 - Sair\n");
 
-    return 0;
+    scanf("%d", &opcao);
 
+    return opcao;
+}
 
+void exibir_mundo(){
 
+    
 }

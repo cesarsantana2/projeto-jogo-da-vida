@@ -4,6 +4,6 @@
 
 void main(){
 
-    test();
+    entrypoint();
 
 }
