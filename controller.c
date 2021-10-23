@@ -3,13 +3,13 @@
 
 // Declarando a assinatura das funcoes
 void determinar_tamanho_da_matriz();
-void inicia_jogo(int opcao);
+void fluxo_do_jogo(int opcao);
 
 //CONTADORES GLOBAIS
 
 int tamanho_da_matriz_quadrada = 0;
 int quantidade_pecas_vivas = 0;
-int quantidade_pecas_vivas_proxima_geracao = 0;
+int quantidade_vizinhos_mortos = 0;
 
 
 void entrypoint(){
@@ -17,7 +17,7 @@ void entrypoint(){
     int opcao, tamanho_da_matriz;
 
     opcao = menu_principal();
-    inicia_jogo(opcao);
+    fluxo_do_jogo(opcao);
 
     //TO-DO 
     //exibir_mundo();
@@ -38,7 +38,7 @@ void inicia_posicoes_das_listas_do_jogo(){
     }
 }
 
-void inicia_jogo(int opcao){
+void fluxo_do_jogo(int opcao){
 
     switch(opcao){
         
