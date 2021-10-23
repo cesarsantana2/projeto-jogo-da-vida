@@ -25,11 +25,17 @@ void entrypoint(){
 
 }
 
-void inicia_posicoes_das_listas_do_mundo(){
+void inicia_posicoes_das_listas_do_jogo(){
 
     int i;
 
-
+    for (i = 0, i < 500; i++){
+        
+        pecas_vivas[i] = 0;
+        vizinhos_mortos = 0;
+        pecas_vivas_proxima_geracao[i] = 0;
+        vizinhos_mortos_proxima_geracao[i] = 0;
+    }
 }
 
 void inicia_jogo(int opcao){
