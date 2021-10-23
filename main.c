@@ -3,5 +3,7 @@
 #include "controller.c"
 
 void main(){
-    test();
+
+    entrypoint();
+
 }
