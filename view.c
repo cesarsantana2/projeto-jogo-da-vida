@@ -86,4 +86,7 @@ void exibir_mundo(int tam){
         }
         printf("\n");
     }    
+    printf("Pecas vivas: ");
+    retorna_pecas_vivas();
+    printf("\n\n");
 }

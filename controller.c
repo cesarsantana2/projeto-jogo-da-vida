@@ -108,6 +108,22 @@ void adicionar_vida_em_uma_posicao(){
     quantidade_pecas_vivas++;
 }
 
+void retorna_pecas_vivas(){
+
+    int i;
+
+    for(i = 0; i < quantidade_pecas_vivas; i++){
+
+        if(i == quantidade_pecas_vivas - 1){ 
+            printf("[%d|[%d]", pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
+        }else{
+            printf("[%d|[%d],", pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
+        }
+    }
+}
+
+
+
 void identificar_vizinhos_de_uma_peca_viva(){
 
     
