@@ -13,7 +13,7 @@ int menu_principal(){
     printf("4 - INICIAR O PROCESSO\n");
     printf("5 - Exibir ultima geracao da ultima simluacao \n");
     printf("6 - Limpar o cadastro de 7 geracoes iniciais\n");
-    printf("0 - Sair\n");
+    printf("0 - Sair\n\n");
 
     scanf("%d", &opcao);
 
@@ -29,7 +29,7 @@ int menu_fluxo_de_geracoes(){
     printf("1 - Adicionar vida em uma posicao\n");
     printf("2 - Remover vida de uma posicao\n");
     printf("3 - Iniciar Simulacao de Geracoes\n");
-    printf("0 - Voltar para o menu principal\n");
+    printf("0 - Voltar para o menu principal\n\n");
 
     scanf("%d", &opcao);
 
@@ -56,20 +56,32 @@ int menu_de_fim_de_jogo(){
 
 void exibir_mundo(int tam){
 
-    int i, j;
+    int i, j, z, w;
     int cont = tam;
 
 
-    printf("\n\nPRINTANDO A MATRIZ\n\n");
+    printf("\n\nMUNDO ATUAL\n\n");
+
+    for(z = 0; z < cont; z++){
+        if(z == 0){
+            printf("   %d ", z);
+       }else if(z == cont -1){
+            printf("%d\n", z);     
+       }else if(z >= 10){
+            printf("%d ", z);
+       }else{
+            printf(" %d ", z);
+       }
+    }
 
     for (i = 0; i < cont; i++){
         printf("%d ", i);
         for (j = 0; j < cont; j++){
 
             if(verifica_se_a_posicao_estah_contida(i, j)){
-                printf("* ");
+               (i < 10 && j == 0) ? printf(" *  ") : printf("*  ");
             }else{
-                printf("- ");
+               (i < 10 && j ==0) ? printf(" -  ") : printf("-  ");
             }
         }
         printf("\n");

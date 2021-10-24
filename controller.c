@@ -86,7 +86,7 @@ int verifica_se_a_posicao_estah_contida(int x, int y){
 
 void determinar_tamanho_da_matriz(){
 
-    printf("Por favor, informe o tamanho da matriz quadrada: ");
+    printf("\nPor favor, informe o tamanho da matriz quadrada: ");
     scanf("%d", &tamanho_da_matriz_quadrada);
 
 }
@@ -96,7 +96,7 @@ void adicionar_vida_em_uma_posicao(){
     int lin, coln;
     int opcao = -1;
    
-    printf("Por favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex.de input: 4,5]:  ");
+    printf("\nPor favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex.de input: 4,5]:  ");
      
 
 
