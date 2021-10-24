@@ -2,7 +2,7 @@
 #include "model.c"
 
 // Declarando a assinatura das funcoes
-int verifica_se_a_posicao_estah_contida(int x, int y);
+int verifica_se_a_posicao_estah_contida(int x, int y, int escolha);
 void determinar_tamanho_da_matriz();
 void fluxo_do_jogo(int opcao);
 void adicionar_vida_em_uma_posicao();
@@ -72,18 +72,27 @@ void controla_jogo(){
 
 void controla_geracoes(){}
 
-int verifica_se_a_posicao_estah_contida(int x, int y){
+int verifica_se_a_posicao_estah_contida(int x, int y, int escolha){
 
     int i;
 
-    for (i = 0; i < quantidade_pecas_vivas; i++){
+    switch(escolha){
+    
+        case 1: for (i = 0; i < quantidade_pecas_vivas; i++){
+                    if(pecas_vivas.pos[i].linha == x && pecas_vivas.pos[i].coluna == y){
+                        return 1;
+                    }
+                }
+                     return 0;
 
-        if(pecas_vivas.pos[i].linha == x && pecas_vivas.pos[i].coluna == y){
-            return 1;
-        }
+        case 2: for (i = 0; i < quantidade_vizinhos_mortos; i++){
+                    if(vizinhos_mortos.pos[i]linha == x && vizinhos_mortos.pos[i].coluna == y){
+                        return 1;
+                    }
+
+                } 
+                    return 0;
     }
-
-    return 0;
 }
 
 
@@ -159,6 +168,17 @@ int identificar_tipo_de_posicao(int linha, int coluna){
     return 9;
 }
 
+void adicionar_vizinhos_canto_superior_esquerdo(){
+
+    int i;
+    
+    for(i = 0; i < 3; i++){
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha =
+    }
+
+}
+
+
 void identificar_vizinhos_de_uma_peca_viva(){
 
     int i, tipo;
@@ -197,13 +217,7 @@ void identificar_vizinhos_de_uma_peca_viva(){
             case 9: //to-do - fazer funcao para pegar vizinhos de peca central
                     break;
         }
-
-
-
-
-
     }
-
 }
 
 void retorna_vizinhos_pecas_vivas(){

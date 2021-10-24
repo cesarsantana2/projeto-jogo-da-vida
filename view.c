@@ -1,4 +1,4 @@
-int verifica_se_a_posicao_estah_contida(int x, int y);
+int verifica_se_a_posicao_estah_contida(int x, int y, int escolha);
 void retorna_pecas_vivas();
 void retorna_vizinhos_pecas_vivas();
 
@@ -81,7 +81,7 @@ void exibir_mundo(int tam){
         printf("%d ", i);
         for (j = 0; j < cont; j++){
 
-            if(verifica_se_a_posicao_estah_contida(i, j)){
+            if(verifica_se_a_posicao_estah_contida(i, j, 1)){
                (i < 10 && j == 0) ? printf(" *  ") : printf("*  ");
             }else{
                (i < 10 && j ==0) ? printf(" -  ") : printf("-  ");
