@@ -2,10 +2,10 @@
 #include "model.c"
 
 // Declarando a assinatura das funcoes
+int verifica_se_a_posicao_estah_contida(int x, int y);
 void determinar_tamanho_da_matriz();
 void fluxo_do_jogo(int opcao);
 void adicionar_vida_em_uma_posicao();
-int verifica_se_a_posicao_estah_contida(int x, int y);
 void controla_jogo();
 void retorna_pecas_vivas();
 void retorna_vizinhos_pecas_vivas();
@@ -100,9 +100,6 @@ void adicionar_vida_em_uma_posicao(){
     int opcao = -1;
    
     printf("\nPor favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex.de input: 4,5]:  ");
-     
-
-
     scanf("%d,%d", &lin,&coln);
 
     pecas_vivas.pos[quantidade_pecas_vivas].linha = lin;
@@ -121,26 +118,95 @@ void retorna_pecas_vivas(){
     }
 }
 
+int identificar_tipo_de_posicao(int linha, int coluna){
+    
+    if(linha == 0){
+        if(coluna == 0){
+            return 1;
+        }
+        if(coluna == 9){
+            return 2;
+        }
+        if(coluna != 0 && coluna != 9){
+            return 5;
+        }
+    }
 
+    if(linha == (tamanho_da_matriz_quadrada - 1)){
+        if(coluna == 0){
+            return 3;
+        }
+        if(coluna == (tamanho_da_matriz_quadrada - 1)){
+            return 4;
+        }
+        if(coluna != 0 && coluna != (tamanho_da_matriz_quadra - 1)){
+            return 6;
+        }
+    }
 
+    if(coluna == 0){
+        if(linha != 0 && linha != (tamanho_da_matriz_quadrada - 1)){
+            return 7;
+        }
+    }
+    
+    if(coluna == (tamanho_da_matriz_quadra - 1)){
+        if(linha != 0 && linha != (tamanho_da_matriz_quadrada - 1)){
+            return 8;
+        }
+    }
 
-
-
-
-
-
+    return 9;
+}
 
 void identificar_vizinhos_de_uma_peca_viva(){
 
-    
+    int i, tipo;
 
+    for(i = 0; i < quantidade_pecas_vivas; i++){
+
+
+        tipo = identificar_tipo_de_posicao(pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
+
+        switch(tipo){
+
+            case 1: //to-do - fazer funcao para pegar vizinhos do canto superior esquerdo
+                    break;
+
+            case 2: //to-do - fazer funcao para pegar vizinhos do canto superior direito
+                    break;
+
+            case 3: //to-do - fazer funcao para pegar vizinhos canto inferior esquerdo;
+                    break;
+
+            case 4: //to-do - fazer funcao para pegar vizinhos canto inferior direito
+                    break;
+
+            case 5: //to-do - fazer funcao para pegar vizinhos de posicao da primeira linha
+                    break;
+
+            case 6: //to-do - fazer funcao para pegar vizinhos de posicao da ultima linha
+                    break;
+
+            case 7: //to-do - fazer funcao para pegar vizinhos de posicao da primeira coluna
+                    break;
+
+            case 8: //to-do - fazer funcao para pegar vizinhos de posicao da ultima coluna
+                    break;
+
+            case 9: //to-do - fazer funcao para pegar vizinhos de peca central
+                    break;
+        }
+
+
+
+
+
+    }
 
 }
 
-
 void retorna_vizinhos_pecas_vivas(){
-
-
 
 }
 
