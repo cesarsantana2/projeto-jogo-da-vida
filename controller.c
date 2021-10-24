@@ -7,6 +7,9 @@ void fluxo_do_jogo(int opcao);
 void adicionar_vida_em_uma_posicao();
 int verifica_se_a_posicao_estah_contida(int x, int y);
 void controla_jogo();
+void retorna_pecas_vivas();
+void retorna_vizinhos_pecas_vivas();
+
 
 //CONTADORES GLOBAIS
 int tamanho_da_matriz_quadrada;
@@ -114,13 +117,16 @@ void retorna_pecas_vivas(){
 
     for(i = 0; i < quantidade_pecas_vivas; i++){
 
-        if(i == quantidade_pecas_vivas - 1){ 
-            printf("[%d|[%d]", pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
-        }else{
-            printf("[%d|[%d],", pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
-        }
+            printf("[%d]|[%d]", pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
     }
 }
+
+
+
+
+
+
+
 
 
 
@@ -130,3 +136,11 @@ void identificar_vizinhos_de_uma_peca_viva(){
 
 
 }
+
+
+void retorna_vizinhos_pecas_vivas(){
+
+
+
+}
+

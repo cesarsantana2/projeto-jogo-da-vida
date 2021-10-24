@@ -1,4 +1,7 @@
 int verifica_se_a_posicao_estah_contida(int x, int y);
+void retorna_pecas_vivas();
+void retorna_vizinhos_pecas_vivas();
+
 
 int menu_principal(){
 
@@ -85,8 +88,11 @@ void exibir_mundo(int tam){
             }
         }
         printf("\n");
-    }    
-    printf("Pecas vivas: ");
+    }   
+    printf("\nPecas vivas: ");
     retorna_pecas_vivas();
+
+    printf("\nVizinhos pecas vivas: ");
+    retorna_vizinhos_pecas_vivas();
     printf("\n\n");
 }
