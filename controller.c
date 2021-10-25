@@ -11,6 +11,7 @@ void retorna_pecas_vivas();
 void retorna_vizinhos_pecas_vivas();
 void adicionar_vizinhos_canto_superior_esquerdo();
 void adicionar_vizinhos_canto_superior_direito();
+void adicionar_vizinhos_posicao_primeira_linha();
 void mapear_vizinhos_de_uma_peca_viva();
 
 //CONTADORES GLOBAIS
@@ -290,7 +291,6 @@ void adicionar_vizinhos_canto_inferior_direito(){
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-2;
 
         quantidade_vizinhos_mortos++;
-
     }
 
     if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-2, 2))){
@@ -300,7 +300,6 @@ void adicionar_vizinhos_canto_inferior_direito(){
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-2;
 
         quantidade_vizinhos_mortos++;
-
     }
 
     if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-1, 2))){
@@ -310,11 +309,57 @@ void adicionar_vizinhos_canto_inferior_direito(){
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-1;
 
         quantidade_vizinhos_mortos++;
-
     }
-
 }
 
+
+void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
+
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+}
 
 void mapear_vizinhos_de_uma_peca_viva(){
 
@@ -339,7 +384,7 @@ void mapear_vizinhos_de_uma_peca_viva(){
             case 4: adicionar_vizinhos_canto_inferior_direito();
                     break;
 
-            case 5: //to-do - fazer funcao para pegar vizinhos de posicao da primeira linha
+            case 5: adicionar_vizinhos_posicao_primeira_linha();
                     break;
 
             case 6: //to-do - fazer funcao para pegar vizinhos de posicao da ultima linha
