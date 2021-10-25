@@ -10,6 +10,7 @@ void controla_jogo();
 void retorna_pecas_vivas();
 void retorna_vizinhos_pecas_vivas();
 void adicionar_vizinhos_canto_superior_esquerdo();
+void adicionar_vizinhos_canto_superior_direito();
 void mapear_vizinhos_de_uma_peca_viva();
 
 //CONTADORES GLOBAIS
@@ -55,7 +56,6 @@ void fluxo_de_geracoes(int opcao){
 
         default: break;
 
-        mapear_vizinhos_de_uma_peca_viva();
 
         
     }
@@ -138,10 +138,10 @@ int identificar_tipo_de_posicao(int linha, int coluna){
         if(coluna == 0){
             return 1;
         }
-        if(coluna == 9){
+        if(coluna == tamanho_da_matriz_quadrada - 1){
             return 2;
         }
-        if(coluna != 0 && coluna != 9){
+        if(coluna != 0 && coluna != tamanho_da_matriz_quadrada - 1){
             return 5;
         }
     }
@@ -208,8 +208,113 @@ void adicionar_vizinhos_canto_superior_esquerdo(){
         quantidade_vizinhos_mortos++;
 
     }
+}
+
+void adicionar_vizinhos_canto_superior_direito(){
+
+    int i;
+
+    if(!(verifica_se_a_posicao_estah_contida(0, tamanho_da_matriz_quadrada-2, 2))){
+
+       vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 0;
+
+       vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-2;
+
+       quantidade_vizinhos_mortos++;
+
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-2, 2))){
+
+       vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
+
+       vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-2;
+
+       quantidade_vizinhos_mortos++;
+
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-1, 2))){
+
+       vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
+
+       vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-1;
+
+       quantidade_vizinhos_mortos++;
+
+    }
+}
+
+
+void adicionar_vizinhos_canto_inferior_esquerdo(){
+
+   
+    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 0, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = 0; 
+
+        quantidade_vizinhos_mortos++;
+    }
+
+
+    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = 1; 
+
+        quantidade_vizinhos_mortos++;
+
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, 1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = 1; 
+
+        quantidade_vizinhos_mortos++;
+    }
 
 }
+
+
+void adicionar_vizinhos_canto_inferior_direito(){
+
+    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, tamanho_da_matriz_quadrada-2, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-2;
+
+        quantidade_vizinhos_mortos++;
+
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-2, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-2;
+
+        quantidade_vizinhos_mortos++;
+
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-1;
+
+        quantidade_vizinhos_mortos++;
+
+    }
+
+}
+
 
 void mapear_vizinhos_de_uma_peca_viva(){
 
@@ -225,13 +330,13 @@ void mapear_vizinhos_de_uma_peca_viva(){
             case 1: adicionar_vizinhos_canto_superior_esquerdo(); 
                     break;
 
-            case 2: //to-do - fazer funcao para pegar vizinhos do canto superior direito
+            case 2: adicionar_vizinhos_canto_superior_direito();
                     break;
 
-            case 3: //to-do - fazer funcao para pegar vizinhos canto inferior esquerdo;
+            case 3: adicionar_vizinhos_canto_inferior_esquerdo(); 
                     break;
 
-            case 4: //to-do - fazer funcao para pegar vizinhos canto inferior direito
+            case 4: adicionar_vizinhos_canto_inferior_direito();
                     break;
 
             case 5: //to-do - fazer funcao para pegar vizinhos de posicao da primeira linha
