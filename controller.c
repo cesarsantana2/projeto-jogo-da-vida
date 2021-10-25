@@ -9,7 +9,8 @@ void adicionar_vida_em_uma_posicao();
 void controla_jogo();
 void retorna_pecas_vivas();
 void retorna_vizinhos_pecas_vivas();
-
+void adicionar_vizinhos_canto_superior_esquerdo();
+void mapear_vizinhos_de_uma_peca_viva();
 
 //CONTADORES GLOBAIS
 int tamanho_da_matriz_quadrada;
@@ -48,10 +49,15 @@ void fluxo_de_geracoes(int opcao){
   
 
         case 1: adicionar_vida_em_uma_posicao();
+                mapear_vizinhos_de_uma_peca_viva();
                 exibir_mundo(tamanho_da_matriz_quadrada);
                 break;
 
         default: break;
+
+        mapear_vizinhos_de_uma_peca_viva();
+
+        
     }
 }
 
@@ -86,7 +92,7 @@ int verifica_se_a_posicao_estah_contida(int x, int y, int escolha){
                      return 0;
 
         case 2: for (i = 0; i < quantidade_vizinhos_mortos; i++){
-                    if(vizinhos_mortos.pos[i]linha == x && vizinhos_mortos.pos[i].coluna == y){
+                    if(vizinhos_mortos.pos[i].linha == x && vizinhos_mortos.pos[i].coluna == y){
                         return 1;
                     }
 
@@ -106,7 +112,6 @@ void determinar_tamanho_da_matriz(){
 void adicionar_vida_em_uma_posicao(){
 
     int lin, coln;
-    int opcao = -1;
    
     printf("\nPor favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex.de input: 4,5]:  ");
     scanf("%d,%d", &lin,&coln);
@@ -123,7 +128,7 @@ void retorna_pecas_vivas(){
 
     for(i = 0; i < quantidade_pecas_vivas; i++){
 
-            printf("[%d]|[%d]", pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
+            printf("[%d|%d]", pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
     }
 }
 
@@ -148,7 +153,7 @@ int identificar_tipo_de_posicao(int linha, int coluna){
         if(coluna == (tamanho_da_matriz_quadrada - 1)){
             return 4;
         }
-        if(coluna != 0 && coluna != (tamanho_da_matriz_quadra - 1)){
+        if(coluna != 0 && coluna != (tamanho_da_matriz_quadrada - 1)){
             return 6;
         }
     }
@@ -159,7 +164,7 @@ int identificar_tipo_de_posicao(int linha, int coluna){
         }
     }
     
-    if(coluna == (tamanho_da_matriz_quadra - 1)){
+    if(coluna == (tamanho_da_matriz_quadrada - 1)){
         if(linha != 0 && linha != (tamanho_da_matriz_quadrada - 1)){
             return 8;
         }
@@ -171,15 +176,42 @@ int identificar_tipo_de_posicao(int linha, int coluna){
 void adicionar_vizinhos_canto_superior_esquerdo(){
 
     int i;
-    
-    for(i = 0; i < 3; i++){
-        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha =
+
+    printf("CHEGUEI AQUI");
+
+    if(!(verifica_se_a_posicao_estah_contida(0, 1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 0;
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = 1;
+
+        quantidade_vizinhos_mortos++;
+
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(1, 1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = 1;
+
+        quantidade_vizinhos_mortos++;
+
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(1, 0, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = 0;
+
+        quantidade_vizinhos_mortos++;
+
     }
 
 }
 
-
-void identificar_vizinhos_de_uma_peca_viva(){
+void mapear_vizinhos_de_uma_peca_viva(){
 
     int i, tipo;
 
@@ -190,7 +222,7 @@ void identificar_vizinhos_de_uma_peca_viva(){
 
         switch(tipo){
 
-            case 1: //to-do - fazer funcao para pegar vizinhos do canto superior esquerdo
+            case 1: adicionar_vizinhos_canto_superior_esquerdo(); 
                     break;
 
             case 2: //to-do - fazer funcao para pegar vizinhos do canto superior direito
@@ -222,5 +254,11 @@ void identificar_vizinhos_de_uma_peca_viva(){
 
 void retorna_vizinhos_pecas_vivas(){
 
+    int i;
+
+    for(i = 0; i < quantidade_vizinhos_mortos; i++){
+        printf("[%d|%d]", vizinhos_mortos.pos[i].linha, vizinhos_mortos.pos[i].coluna);
+    }
+        
 }
 
