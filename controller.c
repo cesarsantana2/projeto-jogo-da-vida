@@ -75,8 +75,6 @@ void controla_jogo(){
     }
 }
 
-
-
 void controla_geracoes(){}
 
 int verifica_se_a_posicao_estah_contida(int x, int y, int escolha){
@@ -177,8 +175,6 @@ int identificar_tipo_de_posicao(int linha, int coluna){
 void adicionar_vizinhos_canto_superior_esquerdo(){
 
     int i;
-
-    printf("CHEGUEI AQUI");
 
     if(!(verifica_se_a_posicao_estah_contida(0, 1, 2))){
         
@@ -361,6 +357,227 @@ void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
     }
 }
 
+
+void adicionar_vizinhos_posicao_ultima_linha(int linha, int coluna){
+    
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+}
+
+void adicionar_vizinhos_posicao_primeira_coluna(int linha, int coluna){
+    
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+}
+
+void adicionar_vizinhos_posicao_ultima_coluna(int linha, int coluna){
+    
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+}
+
+void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna-1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+
+    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2))){
+        
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
+
+        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = coluna+1;
+
+        quantidade_vizinhos_mortos++;
+    }
+}
+
 void mapear_vizinhos_de_uma_peca_viva(){
 
     int i, tipo;
@@ -384,19 +601,19 @@ void mapear_vizinhos_de_uma_peca_viva(){
             case 4: adicionar_vizinhos_canto_inferior_direito();
                     break;
 
-            case 5: adicionar_vizinhos_posicao_primeira_linha();
+            case 5: adicionar_vizinhos_posicao_primeira_linha(pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
                     break;
 
-            case 6: //to-do - fazer funcao para pegar vizinhos de posicao da ultima linha
+            case 6: adicionar_vizinhos_posicao_ultima_linha(pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
                     break;
 
-            case 7: //to-do - fazer funcao para pegar vizinhos de posicao da primeira coluna
+            case 7: adicionar_vizinhos_posicao_primeira_coluna(pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna); 
                     break;
 
-            case 8: //to-do - fazer funcao para pegar vizinhos de posicao da ultima coluna
+            case 8: adicionar_vizinhos_posicao_ultima_coluna(pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna); 
                     break;
 
-            case 9: //to-do - fazer funcao para pegar vizinhos de peca central
+            case 9: adicionar_vizinhos_posicao_do_meio(pecas_vivas.pos[i].linha, pecas_vivas.pos[i].coluna);
                     break;
         }
     }

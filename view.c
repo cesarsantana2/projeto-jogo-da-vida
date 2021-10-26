@@ -82,7 +82,7 @@ void exibir_mundo(int tam){
         for (j = 0; j < cont; j++){
 
             if(verifica_se_a_posicao_estah_contida(i, j, 1)){
-               (i < 10 && j == 0) ? printf(" *  ") : printf("*  ");
+               (i < 10 && j == 0) ? printf(" 0  ") : printf("0  ");
             }else{
                (i < 10 && j ==0) ? printf(" -  ") : printf("-  ");
             }
