@@ -1,6 +1,6 @@
 typedef struct{
 
-    int linha, coluna, valor;
+    int linha, coluna;
     
 } Celula;
 
