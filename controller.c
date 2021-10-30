@@ -13,7 +13,8 @@ void adicionar_vizinhos_canto_superior_esquerdo();
 void adicionar_vizinhos_canto_superior_direito();
 void adicionar_vizinhos_posicao_primeira_linha();
 void mapear_vizinhos_de_uma_peca_viva();
-
+void remover_vida_em_uma_posicao();
+void remove_vida(int posicao);
 //CONTADORES GLOBAIS
 int tamanho_da_matriz_quadrada;
 int quantidade_pecas_vivas = 0;
@@ -112,13 +113,44 @@ void adicionar_vida_em_uma_posicao(){
 
     int lin, coln;
    
-    printf("\nPor favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex.de input: 4,5]:  ");
+    printf("\nPor favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex. de input: 4,5]:  ");
     scanf("%d,%d", &lin,&coln);
 
     pecas_vivas.pos[quantidade_pecas_vivas].linha = lin;
     pecas_vivas.pos[quantidade_pecas_vivas].coluna = coln;
 
     quantidade_pecas_vivas++;
+}
+
+void remover_vida_em_uma_posicao(){
+
+    int i, lin, coln;
+
+    printf("\n Por favor selecione linha e coluna para remover vida ou 0 para sair | [Ex. de input: 4,3]: ");
+    scanf("%d,%d", &lin,&coln);
+
+    for (i = 0; i < quantidade_pecas_vivas; i++){
+
+        if(pecas_vivas.pos[quantidade_pecas_vivas].linha == lin && pecas_vivas.pos[quantidade_pecas_vivas].coluna == coln){
+            remove_vida(i);
+        }
+    }
+}
+
+void remove_vida(int posicao){
+
+    int i;
+
+    for(i = posicao; i < quantidade_pecas_vivas; i++){
+
+        if(i == quantidade_pecas_vivas - 1){
+            quantidade_pecas_vivas = quantidade_pecas_vivas - 1;
+        }else{
+            
+            pecas_vivas.pos[i].linha = pecas_vivas.pos[i+1].linha;
+            pecas_vivas.pos[i].coluna = pecas_vivas.pos[i+1].coluna;
+        }
+    }
 }
 
 void retorna_pecas_vivas(){
