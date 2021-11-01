@@ -3,16 +3,22 @@
 
 // Declarando a assinatura das funcoes
 int verifica_se_a_posicao_estah_contida(int x, int y, int escolha);
+int pega_quantidade_de_vizinhos_vivos();
+int sobrevive_para_proxima_geracao(int posicao);
+int nasce_para_proxima_geracao(int posicao);
 void determinar_tamanho_da_matriz();
 void fluxo_do_jogo(int opcao);
 void adicionar_vida_em_uma_posicao();
 void controla_jogo();
+void controla_passagem_de_geracao();
 void retorna_pecas_vivas();
 void retorna_vizinhos_pecas_vivas();
 void adicionar_vizinhos_canto_superior_esquerdo();
 void adicionar_vizinhos_canto_superior_direito();
 void adicionar_vizinhos_posicao_primeira_linha();
 void mapear_vizinhos_de_uma_peca_viva();
+void remover_vida_em_uma_posicao();
+void remove_vida(int posicao);
 
 //CONTADORES GLOBAIS
 int tamanho_da_matriz_quadrada;
@@ -55,6 +61,16 @@ void fluxo_de_geracoes(int opcao){
                 exibir_mundo(tamanho_da_matriz_quadrada);
                 break;
 
+        case 2: remover_vida_em_uma_posicao();
+                mapear_vizinhos_de_uma_peca_viva();
+                exibir_mundo(tamanho_da_matriz_quadrada);
+                break;
+
+        case 3: controla_passagem_de_geracao();
+                mapear_vizinhos_de_uma_peca_viva();
+                exibir_mundo(tamanho_da_matriz_quadrada);
+                break;
+
         default: break;
 
 
@@ -74,8 +90,6 @@ void controla_jogo(){
         fluxo_de_geracoes(opcao_menu_de_geracoes);
     }
 }
-
-void controla_geracoes(){}
 
 int verifica_se_a_posicao_estah_contida(int x, int y, int escolha){
 
@@ -112,13 +126,44 @@ void adicionar_vida_em_uma_posicao(){
 
     int lin, coln;
    
-    printf("\nPor favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex.de input: 4,5]:  ");
+    printf("\nPor favor selecione linha e coluna para adicionar vida ou 0 para sair | [Ex. de input: 4,5]:  ");
     scanf("%d,%d", &lin,&coln);
 
     pecas_vivas.pos[quantidade_pecas_vivas].linha = lin;
     pecas_vivas.pos[quantidade_pecas_vivas].coluna = coln;
 
     quantidade_pecas_vivas++;
+}
+
+void remover_vida_em_uma_posicao(){
+
+    int i, lin, coln;
+
+    printf("\n Por favor selecione linha e coluna para remover vida ou 0 para sair | [Ex. de input: 4,3]: ");
+    scanf("%d,%d", &lin,&coln);
+
+    for (i = 0; i < quantidade_pecas_vivas; i++){
+
+        if(pecas_vivas.pos[i].linha == lin && pecas_vivas.pos[i].coluna == coln){
+            remove_vida(i);
+        }
+    }
+}
+
+void remove_vida(int posicao){
+
+    int i;
+
+    for(i = posicao; i < quantidade_pecas_vivas; i++){
+
+        if(i == quantidade_pecas_vivas - 1){
+            quantidade_pecas_vivas = quantidade_pecas_vivas - 1;
+        }else{
+            
+            pecas_vivas.pos[i].linha = pecas_vivas.pos[i+1].linha;
+            pecas_vivas.pos[i].coluna = pecas_vivas.pos[i+1].coluna;
+        }
+    }
 }
 
 void retorna_pecas_vivas(){
@@ -176,7 +221,7 @@ void adicionar_vizinhos_canto_superior_esquerdo(){
 
     int i;
 
-    if(!(verifica_se_a_posicao_estah_contida(0, 1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(0, 1, 2)) || (verifica_se_a_posicao_estah_contida(0, 1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 0;
         
@@ -186,7 +231,7 @@ void adicionar_vizinhos_canto_superior_esquerdo(){
 
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(1, 1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(1, 1, 2)) || (verifica_se_a_posicao_estah_contida(1, 1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
         
@@ -196,7 +241,7 @@ void adicionar_vizinhos_canto_superior_esquerdo(){
 
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(1, 0, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(1, 0, 2)) || (verifica_se_a_posicao_estah_contida(1, 0, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
         
@@ -211,7 +256,7 @@ void adicionar_vizinhos_canto_superior_direito(){
 
     int i;
 
-    if(!(verifica_se_a_posicao_estah_contida(0, tamanho_da_matriz_quadrada-2, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(0, tamanho_da_matriz_quadrada-2, 2)) || (verifica_se_a_posicao_estah_contida(0, tamanho_da_matriz_quadrada-2, 1)))){
 
        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 0;
 
@@ -221,7 +266,7 @@ void adicionar_vizinhos_canto_superior_direito(){
 
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-2, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-2, 2)) || (verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-2, 1)))){
 
        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
 
@@ -231,22 +276,19 @@ void adicionar_vizinhos_canto_superior_direito(){
 
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-1, 2)) || (verifica_se_a_posicao_estah_contida(1, tamanho_da_matriz_quadrada-1, 1)))){
 
        vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = 1;
 
        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-1;
 
        quantidade_vizinhos_mortos++;
-
     }
 }
 
-
 void adicionar_vizinhos_canto_inferior_esquerdo(){
 
-   
-    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 0, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 0, 2)) || (verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 0, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
 
@@ -256,7 +298,7 @@ void adicionar_vizinhos_canto_inferior_esquerdo(){
     }
 
 
-    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 1, 2)) || (verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
 
@@ -266,7 +308,7 @@ void adicionar_vizinhos_canto_inferior_esquerdo(){
 
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, 1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, 1, 2)) || (verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, 1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-1;
 
@@ -274,13 +316,11 @@ void adicionar_vizinhos_canto_inferior_esquerdo(){
 
         quantidade_vizinhos_mortos++;
     }
-
 }
-
 
 void adicionar_vizinhos_canto_inferior_direito(){
 
-    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, tamanho_da_matriz_quadrada-2, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, tamanho_da_matriz_quadrada-2, 2)) || (verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-1, tamanho_da_matriz_quadrada-2, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-1;
 
@@ -289,7 +329,7 @@ void adicionar_vizinhos_canto_inferior_direito(){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-2, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-2, 2)) || (verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-2, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
 
@@ -298,7 +338,7 @@ void adicionar_vizinhos_canto_inferior_direito(){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-1, 2)) || (verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, tamanho_da_matriz_quadrada-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
 
@@ -311,7 +351,7 @@ void adicionar_vizinhos_canto_inferior_direito(){
 
 void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
 
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -320,7 +360,7 @@ void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -329,7 +369,7 @@ void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -338,7 +378,7 @@ void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -347,7 +387,7 @@ void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -360,7 +400,7 @@ void adicionar_vizinhos_posicao_primeira_linha(int linha, int coluna){
 
 void adicionar_vizinhos_posicao_ultima_linha(int linha, int coluna){
     
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -369,7 +409,7 @@ void adicionar_vizinhos_posicao_ultima_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -378,7 +418,7 @@ void adicionar_vizinhos_posicao_ultima_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -387,7 +427,7 @@ void adicionar_vizinhos_posicao_ultima_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -396,7 +436,7 @@ void adicionar_vizinhos_posicao_ultima_linha(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -408,7 +448,7 @@ void adicionar_vizinhos_posicao_ultima_linha(int linha, int coluna){
 
 void adicionar_vizinhos_posicao_primeira_coluna(int linha, int coluna){
     
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -417,7 +457,7 @@ void adicionar_vizinhos_posicao_primeira_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -426,7 +466,7 @@ void adicionar_vizinhos_posicao_primeira_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -435,7 +475,7 @@ void adicionar_vizinhos_posicao_primeira_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -444,7 +484,7 @@ void adicionar_vizinhos_posicao_primeira_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -457,7 +497,7 @@ void adicionar_vizinhos_posicao_primeira_coluna(int linha, int coluna){
 
 void adicionar_vizinhos_posicao_ultima_coluna(int linha, int coluna){
     
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -466,7 +506,7 @@ void adicionar_vizinhos_posicao_ultima_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -475,7 +515,7 @@ void adicionar_vizinhos_posicao_ultima_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -484,7 +524,7 @@ void adicionar_vizinhos_posicao_ultima_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -493,7 +533,7 @@ void adicionar_vizinhos_posicao_ultima_coluna(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -505,7 +545,7 @@ void adicionar_vizinhos_posicao_ultima_coluna(int linha, int coluna){
 
 void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -514,7 +554,7 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -523,7 +563,7 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -532,7 +572,7 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -541,7 +581,7 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -550,7 +590,7 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha-1;
 
@@ -559,7 +599,7 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha;
 
@@ -568,7 +608,7 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
         quantidade_vizinhos_mortos++;
     }
 
-    if(!(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2))){
+    if(!((verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 2)) || (verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 1)))){
         
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = linha+1;
 
@@ -581,6 +621,8 @@ void adicionar_vizinhos_posicao_do_meio(int linha, int coluna){
 void mapear_vizinhos_de_uma_peca_viva(){
 
     int i, tipo;
+
+    quantidade_vizinhos_mortos = 0;
 
     for(i = 0; i < quantidade_pecas_vivas; i++){
 
@@ -629,3 +671,260 @@ void retorna_vizinhos_pecas_vivas(){
         
 }
 
+void controla_passagem_de_geracao(){
+
+    int i;
+  
+    quantidade_pecas_vivas_proxima_geracao = 0;
+
+    for(i = 0; i < quantidade_pecas_vivas; i++){
+
+        if(sobrevive_para_proxima_geracao(i)){
+            
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].linha = pecas_vivas.pos[i].linha;
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].coluna = pecas_vivas.pos[i].coluna;
+
+            quantidade_pecas_vivas_proxima_geracao++;
+        
+        }
+    }
+   
+    for(i = 0; i < quantidade_vizinhos_mortos; i++){
+   
+        if(nasce_para_proxima_geracao(i)){
+
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].linha = vizinhos_mortos.pos[i].linha;
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].coluna = vizinhos_mortos.pos[i].coluna;
+            
+            quantidade_pecas_vivas_proxima_geracao++;
+        }
+
+    }
+
+    pecas_vivas = pecas_vivas_proxima_geracao;
+
+    quantidade_pecas_vivas = quantidade_pecas_vivas_proxima_geracao;
+}
+
+
+int nasce_para_proxima_geracao(int posicao){
+
+    int populacao, linha, coluna, tipo;
+
+    linha = vizinhos_mortos.pos[posicao].linha;
+    coluna = vizinhos_mortos.pos[posicao].coluna;
+
+    tipo = identificar_tipo_de_posicao(linha, coluna);
+
+    populacao = pega_quantidade_de_vizinhos_vivos(linha, coluna, tipo);
+
+    if(populacao == 3){
+        return 1;
+    }
+    return 0;
+}
+
+int sobrevive_para_proxima_geracao(int posicao){
+
+   int populacao, linha, coluna, tipo;
+
+   linha = pecas_vivas.pos[posicao].linha;
+   coluna = pecas_vivas.pos[posicao].coluna;
+
+   tipo = identificar_tipo_de_posicao(linha, coluna);
+
+   populacao = pega_quantidade_de_vizinhos_vivos(linha, coluna, tipo);
+   
+   if(populacao >= 4 || populacao < 2){
+       return 0;
+    }
+   return 1;
+}
+
+int pega_quantidade_de_vizinhos_vivos(int linha, int coluna, int tipo){
+
+    int populacao = 0;
+
+
+    switch(tipo){
+
+        case 1: if(verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                } 
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+                    return populacao;
+
+        case 2: if(verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                    return populacao;
+
+        case 3: if(verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+                
+                if(verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                    return populacao;
+        
+        case 4: if(verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+                
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+                
+                if(verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                    return populacao;
+
+        case 5: if(verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+                
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+                    
+                    return populacao;
+
+        case 6: if(verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+                
+                if(verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+                    
+                    return populacao;
+
+        case 7: if(verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+                    
+                    return populacao;
+
+        case 8: if(verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                    return populacao;
+
+
+        case 9: if(verifica_se_a_posicao_estah_contida(linha-1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna+1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha+1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                if(verifica_se_a_posicao_estah_contida(linha-1, coluna-1, 1)){
+                    populacao = populacao + 1;
+                }
+
+                    return populacao;
+    }
+}
