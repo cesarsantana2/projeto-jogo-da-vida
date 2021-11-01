@@ -11,11 +11,8 @@ int menu_principal(){
     printf("Grupo CCAJ\n");
     printf("=========================\n");
     printf("1 - Inicializar a Matriz\n");
-    printf("2 - Salvar uma geracao\n");
-    printf("3 - Recuperar uma geracao inicial cadastrada\n");
-    printf("4 - INICIAR O PROCESSO\n");
-    printf("5 - Exibir ultima geracao da ultima simluacao \n");
-    printf("6 - Limpar o cadastro de 7 geracoes iniciais\n");
+    printf("2 - Voltar para o jogo\n");
+    printf("3 - Partir de uma geracao inicial pre-cadastrada\n");
     printf("0 - Sair\n\n");
 
     scanf("%d", &opcao);
