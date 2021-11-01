@@ -89,7 +89,7 @@ void exibir_mundo(int tam){
     printf("\nPecas vivas: ");
     retorna_pecas_vivas();
 
-    printf("\n\nVizinhos pecas vivas: ");
+    printf("\n\nVizinhos mortos das pecas vivas: ");
     retorna_vizinhos_pecas_vivas();
     printf("\n\n");
 }

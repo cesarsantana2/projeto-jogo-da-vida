@@ -5,6 +5,7 @@
 int verifica_se_a_posicao_estah_contida(int x, int y, int escolha);
 int pega_quantidade_de_vizinhos_vivos();
 int sobrevive_para_proxima_geracao(int posicao);
+int nasce_para_proxima_geracao(int posicao);
 void determinar_tamanho_da_matriz();
 void fluxo_do_jogo(int opcao);
 void adicionar_vida_em_uma_posicao();
@@ -63,6 +64,12 @@ void fluxo_de_geracoes(int opcao){
         case 2: remover_vida_em_uma_posicao();
                 mapear_vizinhos_de_uma_peca_viva();
                 exibir_mundo(tamanho_da_matriz_quadrada);
+                break;
+
+        case 3: controla_passagem_de_geracao();
+                mapear_vizinhos_de_uma_peca_viva();
+                exibir_mundo(tamanho_da_matriz_quadrada);
+                break;
 
         default: break;
 
@@ -276,14 +283,11 @@ void adicionar_vizinhos_canto_superior_direito(){
        vizinhos_mortos.pos[quantidade_vizinhos_mortos].coluna = tamanho_da_matriz_quadrada-1;
 
        quantidade_vizinhos_mortos++;
-
     }
 }
 
-
 void adicionar_vizinhos_canto_inferior_esquerdo(){
 
-   
     if(!((verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 0, 2)) || (verifica_se_a_posicao_estah_contida(tamanho_da_matriz_quadrada-2, 0, 1)))){
 
         vizinhos_mortos.pos[quantidade_vizinhos_mortos].linha = tamanho_da_matriz_quadrada-2;
@@ -312,9 +316,7 @@ void adicionar_vizinhos_canto_inferior_esquerdo(){
 
         quantidade_vizinhos_mortos++;
     }
-
 }
-
 
 void adicionar_vizinhos_canto_inferior_direito(){
 
@@ -672,14 +674,54 @@ void retorna_vizinhos_pecas_vivas(){
 void controla_passagem_de_geracao(){
 
     int i;
+  
+    quantidade_pecas_vivas_proxima_geracao = 0;
 
     for(i = 0; i < quantidade_pecas_vivas; i++){
 
         if(sobrevive_para_proxima_geracao(i)){
+            
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].linha = pecas_vivas.pos[i].linha;
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].coluna = pecas_vivas.pos[i].coluna;
 
+            quantidade_pecas_vivas_proxima_geracao++;
         
         }
     }
+   
+    for(i = 0; i < quantidade_vizinhos_mortos; i++){
+   
+        if(nasce_para_proxima_geracao(i)){
+
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].linha = vizinhos_mortos.pos[i].linha;
+            pecas_vivas_proxima_geracao.pos[quantidade_pecas_vivas_proxima_geracao].coluna = vizinhos_mortos.pos[i].coluna;
+            
+            quantidade_pecas_vivas_proxima_geracao++;
+        }
+
+    }
+
+    pecas_vivas = pecas_vivas_proxima_geracao;
+
+    quantidade_pecas_vivas = quantidade_pecas_vivas_proxima_geracao;
+}
+
+
+int nasce_para_proxima_geracao(int posicao){
+
+    int populacao, linha, coluna, tipo;
+
+    linha = vizinhos_mortos.pos[posicao].linha;
+    coluna = vizinhos_mortos.pos[posicao].coluna;
+
+    tipo = identificar_tipo_de_posicao(linha, coluna);
+
+    populacao = pega_quantidade_de_vizinhos_vivos(linha, coluna, tipo);
+
+    if(populacao == 3){
+        return 1;
+    }
+    return 0;
 }
 
 int sobrevive_para_proxima_geracao(int posicao){
@@ -693,7 +735,7 @@ int sobrevive_para_proxima_geracao(int posicao){
 
    populacao = pega_quantidade_de_vizinhos_vivos(linha, coluna, tipo);
    
-   if(populacao > 4 || populacao < 2){
+   if(populacao >= 4 || populacao < 2){
        return 0;
     }
    return 1;
